@@ -59,6 +59,7 @@ ASFormatter::ASFormatter()
 	shouldStripCommentPrefix = false;
 	shouldUnPadParens = false;
 	attachClosingBracketMode = false;
+    shouldAttachDoWhileClosingBracket = false;
 	shouldBreakOneLineBlocks = true;
 	shouldBreakOneLineStatements = true;
 	shouldConvertTabs = false;
@@ -1882,6 +1883,16 @@ void ASFormatter::setObjCColonPaddingMode(ObjCColonPad mode)
 void ASFormatter::setAttachClosingBracketMode(bool state)
 {
 	attachClosingBracketMode = state;
+}
+
+/**
+ * set option to attach do { .. } while () closing brackets
+ *
+ * @param state true = attach, false = don't attach.
+ */
+void ASFormatter::setAttachDoWhileClosingBracket(bool state)
+{
+	shouldAttachDoWhileClosingBracket = state;
 }
 
 /**
@@ -5455,7 +5466,16 @@ void ASFormatter::isLineBreakBeforeClosingHeader()
 	        || bracketFormatMode == RUN_IN_MODE
 	        || attachClosingBracketMode)
 	{
-		isInLineBreak = true;
+		if (currentHeader == &AS_WHILE && shouldAttachDoWhileClosingBracket)
+		{
+			isInLineBreak = false;
+			appendSpacePad();
+			spacePadNum = 0; // don't count as comment padding
+		}
+		else
+		{
+			isInLineBreak = true;
+		}
 	}
 	else if (bracketFormatMode == NONE_MODE)
 	{

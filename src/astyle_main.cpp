@@ -2964,6 +2964,10 @@ void ASOptions::parseOption(const string &arg, const string &errorInfo)
 	{
 		formatter.setReferenceAlignment(REF_ALIGN_NAME);
 	}
+   else if ( isOption(arg, "attach-do-while-bracket") )
+   {
+      formatter.setAttachDoWhileClosingBracket(true);
+   }
 	else if ( isParamOption(arg, "W") )
 	{
 		int align = 0;

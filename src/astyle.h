@@ -691,6 +691,7 @@ class ASFormatter : public ASBeautifier
 		void setSingleStatementsMode(bool state);
 		void setStripCommentPrefix(bool state);
 		void setTabSpaceConversionMode(bool state);
+        void setAttachDoWhileClosingBracket(bool state);
 		size_t getChecksumIn() const;
 		size_t getChecksumOut() const;
 		int  getChecksumDiff() const;
@@ -947,6 +948,7 @@ class ASFormatter : public ASBeautifier
 		bool isInHorstmannRunIn;
 		bool currentLineBeginsWithBracket;
 		bool attachClosingBracketMode;
+        bool shouldAttachDoWhileClosingBracket;
 		bool shouldBreakOneLineBlocks;
 		bool shouldReparseCurrentChar;
 		bool shouldBreakOneLineStatements;
